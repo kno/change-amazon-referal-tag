@@ -1,1 +1,83 @@
-alert('background.ts')
+let tag: string = "";
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  chrome.storage.sync.get("tags", (data) => {
+    if (data.tags?.length) {
+      console.log("tags", data.tags);
+      tag = data.tags.find((tag) => tag.selected)?.name || "";
+      console.log(tag);
+      updateRules();
+    }
+  });
+});
+
+const amazonURLs = [
+  "*://*.amazon.ae/*",
+  "*://*.amazon.at/*",
+  "*://*.amazon.ca/*",
+  "*://*.amazon.cn/*",
+  "*://*.amazon.co.jp/*",
+  "*://*.amazon.co.uk/*",
+  "*://*.amazon.com.au/*",
+  "*://*.amazon.com.br/*",
+  "*://*.amazon.com.mx/*",
+  "*://*.amazon.com.sg/*",
+  "*://*.amazon.com.tr/*",
+  "*://*.amazon.com/*",
+  "*://*.amazon.de/*",
+  "*://*.amazon.eg/*",
+  "*://*.amazon.es/*",
+  "*://*.amazon.fr/*",
+  "*://*.amazon.ie/*",
+  "*://*.amazon.in/*",
+  "*://*.amazon.it/*",
+  "*://*.amazon.nl/*",
+  "*://*.amazon.pl/*",
+  "*://*.amazon.se/*",
+  "*://*.amazon.sg/*",
+];
+console.log("heres");
+
+const updateRules = () => {
+  chrome.declarativeNetRequest.updateDynamicRules(
+    {
+      removeRuleIds: [1, 2],
+    },
+    () => {
+      console.log("rules removed");
+      if (chrome.runtime.lastError)
+        console.log("update error", chrome.runtime.lastError);
+    }
+  );
+  chrome.declarativeNetRequest.updateDynamicRules(
+    {
+      addRules: [
+        {
+          id: 2,
+          priority: 1,
+          action: {
+            type: "redirect",
+            redirect: {
+              transform: {
+                queryTransform: {
+                  addOrReplaceParams: [
+                    {
+                      key: "tag",
+                      value: tag,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+          condition: { urlFilter: "amazon.*", resourceTypes: ["main_frame"] },
+        },
+      ],
+    },
+    () => {
+      console.log("rules updated");
+      if (chrome.runtime.lastError)
+        console.log("update error", chrome.runtime.lastError);
+    }
+  );
+};

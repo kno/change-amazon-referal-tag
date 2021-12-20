@@ -14,7 +14,7 @@
         "typescript": "^3.9.5"
     },
     "scripts": {
-        "build": "fish build.sh",
+        "build": "sh build.sh",
         "start": "rm -rf dist && parcel html/*.html"
     },
     "devDependencies": {

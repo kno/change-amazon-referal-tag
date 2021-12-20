@@ -1,20 +1,48 @@
 {
-    "name": "Simple Site Blocker",
-    "version": "1.0",
-    "description": "Easily block temporarily sites so you can get things done",
-    "manifest_version": 2,
-    "background": {
-        "scripts": ["chrome/background.js"]
-    },
-    "permissions": ["webRequest", "webRequestBlocking", "<all_urls>"],
-    "options_page": "html/options.html",
-    "browser_action": {
-        "default_popup": "html/popup.html",
-        "default_icon": {
-            "32": "images/icon32.png"
-        }
-    },
-    "icons": {
-        "32": "images/icon32.png"
-    }
+  "name": "Amazon referral tag",
+  "description": "Modify the Amazon referral tag to include the affiliate ID",
+  "version": "1.0",
+  "manifest_version": 3,
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "chrome/background.js"
+  },
+  "permissions": ["declarativeNetRequest", "storage"],
+  "options_page": "html/options.html",
+  "icons": {
+    "32": "images/icon32.png"
+  },
+  "host_permissions": [
+    "https://www.amazon.ae/*",
+    "https://www.amazon.at/*",
+    "https://www.amazon.ca/*",
+    "https://www.amazon.cn/*",
+    "https://www.amazon.co.jp/*",
+    "https://www.amazon.co.uk/*",
+    "https://www.amazon.com.au/*",
+    "https://www.amazon.com.br/*",
+    "https://www.amazon.com.mx/*",
+    "https://www.amazon.com.sg/*",
+    "https://www.amazon.com.tr/*",
+    "https://www.amazon.com/*",
+    "https://www.amazon.de/*",
+    "https://www.amazon.eg/*",
+    "https://www.amazon.es/*",
+    "https://www.amazon.fr/*",
+    "https://www.amazon.ie/*",
+    "https://www.amazon.in/*",
+    "https://www.amazon.it/*",
+    "https://www.amazon.nl/*",
+    "https://www.amazon.pl/*",
+    "https://www.amazon.se/*",
+    "https://www.amazon.sg/*"
+  ]
 }
