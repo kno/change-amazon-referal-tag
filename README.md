@@ -1,6 +1,8 @@
-# ts-react-chrome-extension
+# Amazon Referal tag
 
-> This is based on this [project](https://github.com/Samic8/Hippocampus), please, check it out!
+> This is based on this [project](https://github.com/marlonguimaraes/ts-react-chrome-extension) which is based in [this one](https://github.com/Samic8/Hippocampus), please, check it out!
+
+The resulting extension allow you to add desired referal tag while browsing in amazon.
 
 - [x] Multiple `.ts` (for chrome scripts) and `.tsx` (react) entry points
 - [x] Multiple "application/pages" (each `.html` is an independent React app) as opposed to `create-react-app` (which is single page by design)
