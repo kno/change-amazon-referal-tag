@@ -2,7 +2,9 @@ let tag: string = "";
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   chrome.storage.sync.get("tags", (data) => {
-    if (data.tags?.length) {
+    console.log("prev data")
+    if (data?.tags?.length) {
+      console.log("after data")
       console.log("tags", data.tags);
       tag = data.tags.find((tag) => tag.selected)?.name || "";
       console.log(tag);
@@ -36,7 +38,6 @@ const amazonURLs = [
   "*://*.amazon.se/*",
   "*://*.amazon.sg/*",
 ];
-console.log("heres");
 
 const updateRules = () => {
   chrome.declarativeNetRequest.updateDynamicRules(
@@ -44,7 +45,6 @@ const updateRules = () => {
       removeRuleIds: [1, 2],
     },
     () => {
-      console.log("rules removed");
       if (chrome.runtime.lastError)
         console.log("update error", chrome.runtime.lastError);
     }
@@ -70,12 +70,15 @@ const updateRules = () => {
               },
             },
           },
-          condition: { urlFilter: "amazon.*", resourceTypes: ["main_frame"] },
+          condition: {
+            regexFilter: ".*\.amazon\..*/(dp|deal)/.*",
+            resourceTypes: ["main_frame"],
+          },
         },
       ],
     },
     () => {
-      console.log("rules updated");
+      console.log("rules updated", tag);
       if (chrome.runtime.lastError)
         console.log("update error", chrome.runtime.lastError);
     }
