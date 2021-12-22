@@ -7,9 +7,11 @@ type Tag = {
 
 const Options = () => {
   const [tags, setTags] = React.useState([]);
+  const [newTag, setNewTag] = React.useState("");
+
   React.useEffect(() => {
     chrome.storage.sync.get("tags", (data) => {
-      setTags(data.tags);
+      setTags(data.tags || []);
     });
   }, []);
 
@@ -17,14 +19,14 @@ const Options = () => {
     chrome.storage.sync.set({ tags });
   }, [tags]);
 
-  const handleClick = (e) => {
-    const tagName = prompt("New tag");
-    if (tagName) {
+  const handleAdd = () => {
+    if (newTag) {
       const tag: Tag = {
-        name: tagName,
+        name: newTag,
         selected: false,
       };
       setTags([...tags, tag]);
+      setNewTag("");
     }
   };
 
@@ -33,7 +35,7 @@ const Options = () => {
   };
 
   const handleSelect = (tagName) => {
-    tags.forEach((tag) => {
+    tags?.forEach((tag) => {
       if (tag.name === tagName) {
         tag.selected = true;
       } else {
@@ -43,12 +45,17 @@ const Options = () => {
     });
   };
 
+  const handleEditNewTag = (e) => {
+    setNewTag(e.target.value);
+  }
+
   return (
     <div>
-      <button type="button" onClick={handleClick}>
+      <input type="text" value={newTag} onChange={handleEditNewTag} />
+      <button type="button" onClick={handleAdd}>
         Add
       </button>
-      {tags.map((tag) => (
+      {tags && tags.length > 0 && tags.map((tag) => (
         <div key={tag.name}>
           <label>
             <input
