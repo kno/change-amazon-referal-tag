@@ -20,9 +20,8 @@ const Options = () => {
 
   React.useEffect(() => {
     if (tags.length && !tags.find((tag) => tag.selected )) {
-      const newTags = [...tags];
-      newTags[0].selected = true;
-      setTags(newTags);
+      const [firstTag, ...otherTags] = [...tags];
+      setTags([{ ...firstTag, selected: true }, ...otherTags]);
     }
     chrome.storage.sync.set({ tags });
   }, [tags]);
