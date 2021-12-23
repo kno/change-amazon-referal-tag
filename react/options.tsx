@@ -19,14 +19,19 @@ const Options = () => {
   }, []);
 
   React.useEffect(() => {
+    if (tags.length && !tags.find((tag) => tag.selected )) {
+      const newTags = [...tags];
+      newTags[0].selected = true;
+      setTags(newTags);
+    }
     chrome.storage.sync.set({ tags });
   }, [tags]);
 
   const handleAdd = () => {
-    if (newTag) {
+    if (newTag && !tags.find((tag) => tag.name === newTag)) {
       const tag: Tag = {
         name: newTag,
-        selected: false,
+        selected: tags.length === 0 || !tags.find((tag) => tag.selected),
       };
       setTags([...tags, tag]);
       setNewTag("");
