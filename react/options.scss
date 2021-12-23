@@ -1,0 +1,179 @@
+// delete the following line if no text is used
+// edit the line if you wanna use other fonts
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+$color: black;
+$color2: pink;
+$radius: 0.35rem;
+$border-width: 2px;
+$color-bg: white;
+$offset: 0.5rem;
+$transition: 0.3s;
+
+// use only the available space inside the 400x400 frame
+.frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: #333;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /*
+	http://colorzilla.com/gradient-editor */
+  background: rgb(253, 162, 49);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(253, 162, 49, 1) 0%,
+    rgba(251, 183, 49, 1) 60%,
+    rgba(253, 202, 49, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(253, 162, 49, 1) 0%,
+    rgba(251, 183, 49, 1) 60%,
+    rgba(253, 202, 49, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(253, 162, 49, 1) 0%,
+    rgba(251, 183, 49, 1) 60%,
+    rgba(253, 202, 49, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fda231', endColorstr='#fdca31',GradientType=1 );
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.list-cmp {
+  background: #ffffff;
+  color: #497081;
+  padding: 10px 30px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.15);
+  width: 380px;
+
+  &__header {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+
+    h2 {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin: 4px auto;
+      padding: 0;
+    }
+    p {
+      padding: 0 0 5px;
+      margin: 4px auto;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 10px 0 15px;
+      margin: 0;
+      text-align: left;
+      width: 100%;
+      border-bottom: solid 1px #ccc;
+
+      &.selected {
+        background-color: #f6f6f6;
+      }
+
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      label {
+        cursor: pointer;
+        font-size: 0.82rem;
+        width: 300px;
+        display: block;
+        flex-grow: 3;
+
+        input {
+          float: right;
+          opacity: 0;
+        }
+
+        span {
+          position: relative;
+          display: block;
+          transition: all 550ms ease-in-out;
+        }
+
+        input + span::after {
+          content: "";
+          display: block;
+          border: 1px solid #497081;
+          border-radius: 13px;
+          height: 13px;
+          width: 13px;
+          position: absolute;
+          right: 0;
+          top: 1px;
+          z-index: 10;
+
+          transition: all 550ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          /* https://matthewlein.com/tools/ceaser */
+        }
+
+        input + span::before {
+          content: "✔";
+          display: block;
+          font-size: 22px;
+          height: 13px;
+          width: 13px;
+          position: absolute;
+          right: -2px;
+          top: -8px;
+          z-index: 10;
+          opacity: 0;
+        }
+
+        input:checked + span {
+          color: #1c340e;
+          transition: all 550ms ease-in-out;
+        }
+
+        input:checked + span::after {
+          opacity: 0;
+          height: 17px;
+          width: 17px;
+          top: -2px;
+          right: -2px;
+        }
+
+        input:checked + span::before {
+          opacity: 1;
+          transition: all 550ms ease-in-out;
+        }
+      }
+      span.delete {
+        margin-left: 20px;
+        font-size: 1.5em;
+      }
+    }
+  }
+}
